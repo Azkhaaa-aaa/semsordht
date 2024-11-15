@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/10766/10766489.png">
     <title>Monitoring Suhu dan Kelembaban</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -61,6 +62,21 @@
             color: #555;
             margin-top: 10px;
         }
+
+        .link {
+            margin-top: 30px;
+            font-size: 18px;
+        }
+
+        .link a {
+            color: #00796b;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -83,6 +99,10 @@
         </div>
     </div>
 
+    <div class="link">
+        <a href="table.html">Lihat Semua Data</a>
+    </div>
+
     <script>
         // JavaScript code to fetch data and update the display
         function updateSensorData() {
@@ -95,7 +115,13 @@
             })
                 .then(response => response.json())
                 .then(data => {
+                    // Sort the data by 'id' in descending order
+                    data.sort((a, b) => b.id - a.id);
+
+                    // Extract the first entry after sorting by id
                     const { suhu, kelembapan } = data[0];
+
+                    // Update the display with sorted data
                     document.getElementById('temperature').textContent = suhu.toFixed(1);
                     document.getElementById('humidity').textContent = kelembapan.toFixed(1);
                 })
@@ -110,6 +136,7 @@
         // Update sensor data every 3 seconds
         setInterval(updateSensorData, 3000);
     </script>
+
 </body>
 
 </html>
